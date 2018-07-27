@@ -10,6 +10,7 @@ module.exports = {
     es6: true,
     // node: true
   },
+  plugins: ['vue'],
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue
     'plugin:vue/strongly-recommended',
