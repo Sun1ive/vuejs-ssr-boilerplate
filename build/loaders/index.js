@@ -1,8 +1,5 @@
 const path = require('path');
-const config = require('../../config');
-const isProd = process.env.NODE_ENV === 'production';
-
-const assetsPath = () => (isProd ? config.build.assetsSubDirectory : config.dev.assetsSubDirectory);
+const { assetsPath } = require('../utils');
 
 function resolve(dir) {
   return path.resolve(__dirname, '..', dir);
@@ -17,6 +14,9 @@ exports.vueLoader = () => ({
         options: {
           compilerOptions: {
             preserveWhitespace: false,
+          },
+          loaders: {
+            scss: ['vue-style-loader', 'css-loader', 'sass-loader'],
           },
         },
       },
@@ -62,7 +62,7 @@ exports.imagesLoader = () => ({
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: assetsPath('[name].[hash:7].[ext]'),
+          name: assetsPath('img/[name].[hash:7].[ext]'),
         },
       },
     ],
@@ -78,6 +78,7 @@ exports.svgLoader = () => ({
         options: {
           svgo: {
             plugins: [{ removeDimensions: true }, { removeViewBox: false }],
+            name: assetsPath('svg/[name].[ext]'),
           },
         },
       },
@@ -104,7 +105,7 @@ exports.eslintLoader = () => ({
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
-        include: [resolve('src'), resolve('test')],
+        include: [resolve('../src'), resolve('../test')],
         options: {
           formatter: require('eslint-friendly-formatter'),
         },

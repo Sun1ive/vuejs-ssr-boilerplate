@@ -9,6 +9,7 @@ module.exports = merge.smart(base, {
   devtool: '#source-map',
   entry: './src/entry-server.js',
   output: {
+    filename: '[name].[chunkhash].js',
     libraryTarget: 'commonjs2',
   },
   externals: nodeExternals({
@@ -19,7 +20,7 @@ module.exports = merge.smart(base, {
     // because sadly new extract css plugin doesn't support server side css
     rules: [
       {
-        test: /\.(css|scss|stylus|styl)$/,
+        test: /\.(css)$/,
         use: ['vue-style-loader', 'css-loader'],
       },
     ],

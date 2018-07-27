@@ -4,8 +4,8 @@
   </div>
 </template>
 
-<style>
-.bg {
-  background-image: url('/public/img/bg-2.png')
-}
+<script src="./script.js">
+</script>
+
+<style src="./styles.scss" lang="scss" scoped>
 </style>

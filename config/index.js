@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   build: {
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'public',
+    assetsSubDirectory: '',
     assetsPublicPath: '/',
     productionSourceMap: true,
     productionGzip: false,
@@ -13,7 +13,7 @@ module.exports = {
   dev: {
     port: 8080,
     autoOpenBrowser: true,
-    assetsSubDirectory: 'public',
+    assetsSubDirectory: '',
     assetsPublicPath: '/',
     proxyTable: {},
     cssSourceMap: false
