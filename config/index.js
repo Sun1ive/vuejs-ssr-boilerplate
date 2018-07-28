@@ -8,7 +8,7 @@ module.exports = {
     productionSourceMap: true,
     productionGzip: false,
     productionGzipExtensions: ['js', 'css'],
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: process.env.npm_config_report,
   },
   dev: {
     port: 8080,
@@ -16,6 +16,6 @@ module.exports = {
     assetsSubDirectory: '',
     assetsPublicPath: '/',
     proxyTable: {},
-    cssSourceMap: false
-  }
+    cssSourceMap: false,
+  },
 };

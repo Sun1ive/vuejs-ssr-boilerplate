@@ -5,6 +5,10 @@ npm-debug.log
 yarn-error.log
 coverage
 
+# local env files
+.env
+.env*
+
 # Editor directories and files
 .idea
 *.suo

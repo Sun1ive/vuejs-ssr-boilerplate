@@ -9,7 +9,7 @@ module.exports = merge.smart(base, {
   devtool: '#source-map',
   entry: './src/entry-server.js',
   output: {
-    filename: '[name].[chunkhash].js',
+    filename: 'server-bundle.js',
     libraryTarget: 'commonjs2',
   },
   externals: nodeExternals({
@@ -21,7 +21,7 @@ module.exports = merge.smart(base, {
     rules: [
       {
         test: /\.(css)$/,
-        use: ['vue-style-loader', 'css-loader', 'postcss-loader'],
+        use: ['vue-style-loader','css-loader'],
       },
     ],
   },
