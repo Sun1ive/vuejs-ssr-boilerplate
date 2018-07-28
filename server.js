@@ -1,18 +1,20 @@
+require('dotenv').config(); // eslint-disable-line
 const fs = require('fs');
 const path = require('path');
 const LRU = require('lru-cache');
 const express = require('express');
 const favicon = require('serve-favicon');
 const compression = require('compression');
-// const microcache = require('route-cache');
-const resolve = file => path.resolve(__dirname, file);
 const { createBundleRenderer } = require('vue-server-renderer');
+// const microcache = require('route-cache');
 
 const isProd = process.env.NODE_ENV === 'production';
 // const useMicroCache = process.env.MICRO_CACHE !== 'false';
 
 const serverInfo =  `express/${require('express/package.json').version} `
   + `vue-server-renderer/${require('vue-server-renderer/package.json').version}`;
+
+const resolve = file => path.resolve(__dirname, file);
 
 const app = express();
 
@@ -60,8 +62,8 @@ if (isProd) {
 }
 
 const serve = (path, cache) => express.static(resolve(path), {
-  maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0,
-});
+    maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0,
+  });
 
 app.use(compression({ threshold: 0 }));
 app.use(favicon('./public/img/favicon.ico'));
@@ -78,13 +80,14 @@ app.use('/public', serve('./public', true));
 // https://www.nginx.com/blog/benefits-of-microcaching-nginx/
 // app.use(microcache.cacheSeconds(1, req => useMicroCache && req.originalUrl));
 
-function render(req, res) {
-  const s = Date.now();
+// eslint-disable-next-line
+async function render(req, res) {
+  const s = Date.now(); // eslint-disable-line
 
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('Server', serverInfo);
 
-  const handleError = (err) => {
+  const handleError = err => {
     if (err.url) {
       res.redirect(err.url);
     } else if (err.code === 404) {
@@ -99,20 +102,15 @@ function render(req, res) {
 
   const context = {
     url: req.url,
-    title: 'Hello world',
-    meta: '<meta description="test-srr">',
+    title: 'Vuejs SSR template',
+    meta: '<meta description="Vuejs SSR project">',
   };
-  renderer.renderToString(context, (err, html) => {
-    if (err) {
-      return handleError(err);
-    }
-
+  try {
+    const html = await renderer.renderToString(context);
     res.send(html);
-
-    if (!isProd) {
-      console.log(`whole request: ${Date.now() - s}ms`);
-    }
-  });
+  } catch (error) {
+    return handleError(error);
+  }
 }
 
 app.get(
@@ -124,7 +122,8 @@ app.get(
     },
 );
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT;
+
 app.listen(port, () => {
   console.log(`Server started at localhost:${port}`);
 });

@@ -31,7 +31,11 @@ module.exports = {
   ],
   rules: {
     'prefer-promise-reject-errors': 0,
+    'import/extensions': 0,
+    'vue/max-attributes-per-line': 0,
     'no-shadow': 0,
+    'arrow-parens': 0,
+    'max-len': 0,
     'no-underscore-dangle': 0,
     'no-param-reassign': 0,
     // allow debugger during development

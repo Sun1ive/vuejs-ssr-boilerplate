@@ -31,6 +31,7 @@ export default context => {
       const matchedComponents = router.getMatchedComponents();
       // no matched routes
       if (!matchedComponents.length) {
+        // will crash the server / should decide if needed to redirect
         return reject({ code: 404 });
       }
       // Call fetchData hooks on components matched by the route.
