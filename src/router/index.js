@@ -13,6 +13,7 @@ const routes = [
   { path: '*', name: 'NotFound404', component: _import('NotFound') },
 ];
 
+// eslint-disable-next-line
 export function createRouter() {
   return new Router({
     routes,

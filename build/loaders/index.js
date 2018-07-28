@@ -130,7 +130,7 @@ exports.cssLoader = () => ({
     rules: [
       {
         test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader'],
+        use: ['vue-style-loader', 'css-loader', 'postcss-loader'],
       },
     ],
   },
@@ -141,7 +141,7 @@ exports.setupResolutions = () => ({
     extensions: ['.js', '.vue'],
     alias: {
       vue$: 'vue/dist/vue.esm.js',
-      '~': path.resolve(__dirname, '../../public'),
+      '~': resolve('../public'),
       '@': resolve('../src'),
     },
   },

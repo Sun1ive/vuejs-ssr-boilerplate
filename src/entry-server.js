@@ -7,7 +7,10 @@ const isDev = process.env.NODE_ENV !== 'production';
 // state of our application before actually rendering it.
 // Since data fetching is async, this function is expected to
 // return a Promise that resolves to the app instance.
+
+// eslint-disable-next-line
 export default context => {
+  // eslint-disable-next-line
   return new Promise((resolve, reject) => {
     const s = isDev && Date.now();
     const { app, router, store } = createApp();
@@ -23,6 +26,7 @@ export default context => {
     router.push(url);
 
     // wait until router has resolved possible async hooks
+    // eslint-disable-next-line
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents();
       // no matched routes
@@ -35,16 +39,15 @@ export default context => {
       // updated.
       Promise.all(
         matchedComponents.map(
-          ({ asyncData }) =>
-            asyncData &&
-            asyncData({
+          ({ asyncData }) => asyncData
+            && asyncData({
               store,
               route: router.currentRoute,
             }),
         ),
       )
         .then(() => {
-          isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`);
+          isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`); // eslint-disable-line
           // After all preFetch hooks are resolved, our store is now
           // filled with the state needed to render the app.
           // Expose the state on the render context, and let the request handler

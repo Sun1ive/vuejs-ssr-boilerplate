@@ -7,6 +7,7 @@ import initialState from './initialState';
 
 Vue.use(Vuex);
 
+// eslint-disable-next-line
 export function createStore() {
   return new Vuex.Store({
     state: initialState(),
