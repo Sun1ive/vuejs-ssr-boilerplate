@@ -9,7 +9,6 @@ module.exports = merge.smart(base, {
   devtool: '#source-map',
   entry: './src/entry-server.js',
   output: {
-    filename: 'server-bundle.js',
     libraryTarget: 'commonjs2',
   },
   externals: nodeExternals({
