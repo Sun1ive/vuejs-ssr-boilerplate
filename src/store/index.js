@@ -3,16 +3,18 @@ import Vuex from 'vuex';
 import * as actions from './actions';
 import * as mutations from './mutations';
 import * as getters from './getters';
-import initialState from './initialState';
+import getInitialState from './getInitialState';
 
 Vue.use(Vuex);
 
 // eslint-disable-next-line
 export function createStore() {
-  return new Vuex.Store({
-    state: initialState(),
+  // get access to store
+  const store = new Vuex.Store({
+    state: getInitialState(),
     actions,
     mutations,
     getters,
   });
+  return store;
 }

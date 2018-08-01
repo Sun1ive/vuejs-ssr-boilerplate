@@ -15,10 +15,13 @@ const routes = [
 
 // eslint-disable-next-line
 export function createRouter() {
-  return new Router({
+  // getting access to router object
+  const router = new Router({
+    base: '/',
     routes,
     mode: 'history',
     fallback: false,
     scrollBehavior: () => ({ y: 0 }),
   });
+  return router;
 }

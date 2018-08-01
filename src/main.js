@@ -1,8 +1,11 @@
 import Vue from 'vue';
 import { sync } from 'vuex-router-sync';
-import App from './App.vue';
+import NoSSR from 'vue-no-ssr';
 import { createStore } from '@/store';
 import { createRouter } from '@/router';
+import ClientEntrypoint from '@/containers/entrypoints/ClientEntrypoint';
+
+Vue.component('no-ssr', NoSSR);
 
 // Expose a factory function that creates a fresh set of store, router,
 // app instances on each call (which is called for each SSR request)
@@ -23,7 +26,7 @@ export function createApp() {
   const app = new Vue({
     router,
     store,
-    render: h => h(App),
+    render: h => h(ClientEntrypoint),
   });
 
   // expose the app, the router and the store.

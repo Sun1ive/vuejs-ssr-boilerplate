@@ -4,5 +4,5 @@
   </div>
 </template>
 
-<style scoped>
-</style>
+<script src="./script.js">
+</script>
