@@ -138,7 +138,7 @@ exports.cssLoader = () => ({
 
 exports.setupResolutions = () => ({
   resolve: {
-    extensions: ['.js', '.vue'],
+    extensions: ['.js', '.vue', '.scss'],
     alias: {
       vue$: 'vue/dist/vue.esm.js',
       '~': resolve('../public'),

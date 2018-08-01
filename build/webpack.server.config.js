@@ -9,20 +9,22 @@ module.exports = merge.smart(base, {
   devtool: '#source-map',
   entry: './src/entry-server.js',
   output: {
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'commonjs2'
   },
   externals: nodeExternals({
+     // this WILL include `css` and `vue-styles` in the bundle`
     whitelist: [/\.css$/, /\?vue&type=style/],
   }),
+  // externals: Object.keys(require('../package.json').dependencies),
   module: {
     // important on server side
     // because sadly new extract css plugin doesn't support server side css
     rules: [
       {
         test: /\.(css)$/,
-        use: ['vue-style-loader','css-loader'],
-      },
-    ],
+        use: ['vue-style-loader', 'css-loader']
+      }
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -30,8 +32,8 @@ module.exports = merge.smart(base, {
       'process.env.VUE_ENV': '"server"',
       'process.browser': false,
       'process.client': false,
-      'process.server': true,
+      'process.server': true
     }),
-    new VueSSRServerPlugin(),
-  ],
+    new VueSSRServerPlugin()
+  ]
 });
