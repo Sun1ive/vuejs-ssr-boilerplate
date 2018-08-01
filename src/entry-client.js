@@ -21,7 +21,6 @@ const renderClient = async () => {
         asyncData({
           store: this.$store,
           route: to,
-          router: this.$router,
         })
           .then(next)
           .catch(next);
@@ -43,9 +42,11 @@ const renderClient = async () => {
       const prevMatched = router.getMatchedComponents(from);
 
       let diffed = false;
+
+      // matching all components and check difference between routes
       // eslint-disable-next-line
-      const activated = matched.filter((c, i) => diffed || (diffed = prevMatched[i] !== c));
-      const asyncDataHooks = activated.map(c => c.asyncData).filter(_ => _);
+      const activated = matched.filter((component, index) => diffed || (diffed = prevMatched[index] !== component));
+      const asyncDataHooks = activated.map(component => component.asyncData).filter(_ => _);
       if (!asyncDataHooks.length) {
         return next();
       }
