@@ -18,7 +18,6 @@
         "regenerator": true,
         "moduleName": "babel-runtime"
       }
-    ],
-    "babel-plugin-syntax-dynamic-import"
+    ]
   ]
 }

@@ -1,16 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Home from '@/containers/pages/Home';
+import NotFound from '@/containers/pages/NotFound';
 
 Vue.use(Router);
 
-// use this dynamic import if you want to split
-// your code on chunks
-// if don't then use import comp from '...' as usual
-const _import = file => () => import(`@/containers/pages/${file}`);
-
 const routes = [
-  { path: '/', name: 'home', component: _import('Home') },
-  { path: '*', name: 'NotFound404', component: _import('NotFound') },
+  { path: '/', name: 'home', component: Home },
+  { path: '*', name: 'NotFound', component: NotFound },
 ];
 
 // eslint-disable-next-line
