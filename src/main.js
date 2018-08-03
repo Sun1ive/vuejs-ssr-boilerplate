@@ -5,7 +5,6 @@ import { createStore } from '@/store';
 import { createRouter } from '@/router';
 import ClientEntrypoint from '@/containers/entrypoints/ClientEntrypoint';
 import 'normalize.css';
-import 'vuetify/dist/vuetify.min.css';
 
 Vue.component('no-ssr', NoSSR);
 
