@@ -1,15 +1,23 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+
+import AppLayout from '@/containers/layouts/App';
+
 import Home from '@/containers/pages/Home';
-import App from '@/containers/pages/App';
 import NotFound from '@/containers/pages/NotFound';
 
 Vue.use(Router);
 
 const routes = [
-  { path: '/', name: 'home', component: Home },
-  { path: '/app', name: 'app', component: App },
-  { path: '*', name: 'NotFound', component: NotFound },
+  {
+    path: '/',
+    component: AppLayout,
+    children: [
+      { path: '', redirect: 'home' },
+      { path: 'home', name: 'home', component: Home },
+      { path: '*', name: 'NotFound', component: NotFound },
+    ],
+  },
 ];
 
 // eslint-disable-next-line
