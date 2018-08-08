@@ -1,13 +1,16 @@
-##### README #####
-
+## README
 Vue-SSR-Boilerplate
 
-Used technologies:
-Vue
-Vuex
-Vue-router
-Vue-ssr
+## Front-end
+* Vue
+* Vuex
+* Vue-router
+* Vue-SSR
 
-Dont edit entrypoints, all logic should be at application layer
+## Tests
+* Jest
+* Cypress
 
-Try to unify all logic into one interface to work with
+# Dont edit entrypoints, all logic should be at application layer
+
+# Try to unify all logic into one interface to work with
