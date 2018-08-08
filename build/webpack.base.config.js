@@ -11,46 +11,45 @@ const rules = require('./loaders');
 
 const isProd = process.env.NODE_ENV === 'production';
 
-module.exports = merge(
-  {
-    mode: isProd ? 'production' : 'development',
-    devtool: isProd ? false : '#cheap-module-source-map',
-    output: {
-      path: path.resolve(__dirname, '../dist'),
-      publicPath: '/dist/',
-      filename: assetsPath('js/[name].[chunkhash:16].js'),
-    },
-    module: {
-      noParse: /es6-promise\.js$/,
-    },
-    performance: {
-      maxEntrypointSize: 300000,
-      hints: isProd ? 'warning' : false,
-    },
-    plugins: isProd
-      ? [
-          new VueLoaderPlugin(),
-          new MiniCssExtractPlugin({ filename: assetsPath('css/[name].[chunkhash].css') }),
-        ]
-      : [new VueLoaderPlugin(), new FriendlyErrorsPlugin()],
-    optimization: {
-      minimizer: isProd
-        ? [
-            new UglifyJsPlugin({
-              cache: true,
-              parallel: true,
-            }),
-            new OptimizeCSSAssetsPlugin(),
-          ]
-        : [],
-    },
+module.exports = {
+  mode: isProd ? 'production' : 'development',
+  devtool: isProd ? false : '#cheap-module-source-map',
+  output: {
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: '/dist/',
+    filename: assetsPath('js/[name].[chunkhash:16].js')
   },
-  rules.scssLoader(),
-  rules.vueLoader(),
-  rules.babelLoader(),
-  rules.eslintLoader(),
-  rules.svgLoader(),
-  rules.imagesLoader(),
-  rules.setupResolutions(),
-  // rules.ScssCssLoader(),
-);
+  module: {
+    noParse: /es6-promise\.js$/,
+    rules: [
+      // rules.scssLoader(),
+      rules.vueLoader(),
+      rules.babelLoader(),
+      rules.eslintLoader(),
+      rules.svgLoader(),
+      rules.imagesLoader()
+    ]
+  },
+  resolve: rules.setupResolutions(),
+  performance: {
+    maxEntrypointSize: 300000,
+    hints: isProd ? 'warning' : false
+  },
+  plugins: isProd
+    ? [
+        new VueLoaderPlugin(),
+        new MiniCssExtractPlugin({ filename: assetsPath('css/[name].[chunkhash].css') })
+      ]
+    : [new VueLoaderPlugin(), new FriendlyErrorsPlugin()],
+  optimization: {
+    minimizer: isProd
+      ? [
+          new UglifyJsPlugin({
+            cache: true,
+            parallel: true
+          }),
+          new OptimizeCSSAssetsPlugin()
+        ]
+      : []
+  }
+};

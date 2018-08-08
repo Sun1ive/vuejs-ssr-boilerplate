@@ -3,11 +3,9 @@ const path = require('path');
 const merge = require('webpack-merge');
 const base = require('./webpack.base.config');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ResourceHintWebpackPlugin = require('resource-hints-webpack-plugin');
-
-const isProd = process.env.NODE_ENV === 'production';
+const rules = require('./loaders');
 
 const htmlWebpackPluginOptions = {
   title: 'No-SSR tempalte',
@@ -20,18 +18,7 @@ const config = merge.smart(base, {
     app: './src/entry-client.js'
   },
   module: {
-    rules: [
-      {
-        test: /\.(css)$/,
-        use: [
-          !isProd ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: { minimize: isProd }
-          }
-        ]
-      }
-    ]
+    rules: [rules.cssLoader(), rules.scssLoader()]
   },
   plugins: [
     new HtmlWebpackPlugin(htmlWebpackPluginOptions),
