@@ -62,6 +62,12 @@ const serve = (path, cache) => express.static(resolve(path), {
   maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0,
 });
 
+app.engine('html', require('ejs').renderFile);
+
+app.set('view engine', 'html');
+app.set('views', path.resolve(__dirname, '../dist'));
+app.set('port', process.env.PORT || 8080);
+
 app.use(helmet());
 app.use(compression({ threshold: 0 }));
 app.use(cookieParser());
@@ -69,6 +75,7 @@ app.use(favicon(path.resolve(__dirname, '../public/img/icons/favicon.ico')));
 app.use('/dist', serve('../dist', true));
 app.use('/public', serve('../public', true));
 app.use('/manifest.json', serve('../public/manifest.json', true));
+
 // app.use('/service-worker.js', serve('./dist/service-worker.js'));
 
 // eslint-disable-next-line
@@ -105,15 +112,27 @@ async function render(req, res) {
   }
 }
 
-app.get(
-  '*',
-  isProd
-    ? render
-    : (req, res) => {
-      readyPromise.then(() => render(req, res));
-    },
-);
+if (isProd) {
+  app.get(
+    '/',
+    isProd
+      ? render
+      : (req, res) => {
+        readyPromise.then(() => render(req, res));
+      },
+  );
+  app.get('*', (req, res) => {
+    res.render('index');
+  });
+} else {
+  app.get(
+    '*',
+    isProd
+      ? render
+      : (req, res) => {
+        readyPromise.then(() => render(req, res));
+      },
+  );
+}
 
-const PORT = process.env.PORT || 8080;
-
-app.listen(PORT, () => console.log(`Server started at localhost:${PORT}`));
+app.listen(app.get('port'), () => console.log(`Server started at localhost:${app.get('port')}`));
