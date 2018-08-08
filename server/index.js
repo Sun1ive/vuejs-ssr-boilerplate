@@ -112,18 +112,27 @@ async function render(req, res) {
   }
 }
 
-app.get(
-  '/',
-  isProd
-    ? render
-    : (req, res) => {
-      readyPromise.then(() => render(req, res));
-    },
-);
-
-app.get('*', (req, res) => {
-  res.render('index');
-});
-
+if (isProd) {
+  app.get(
+    '/',
+    isProd
+      ? render
+      : (req, res) => {
+        readyPromise.then(() => render(req, res));
+      },
+  );
+  app.get('*', (req, res) => {
+    res.render('index');
+  });
+} else {
+  app.get(
+    '*',
+    isProd
+      ? render
+      : (req, res) => {
+        readyPromise.then(() => render(req, res));
+      },
+  );
+}
 
 app.listen(app.get('port'), () => console.log(`Server started at localhost:${app.get('port')}`));
