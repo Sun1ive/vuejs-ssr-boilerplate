@@ -7,5 +7,5 @@
 <script src="./script.js">
 </script>
 
-<style src="./styles.scss" lang="scss" scoped>
+<style lang="scss" src="./styles.scss" scoped>
 </style>

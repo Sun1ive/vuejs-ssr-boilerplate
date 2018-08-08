@@ -22,7 +22,7 @@ const config = merge.smart(base, {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.(css)$/,
         use: [
           !isProd ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
           {

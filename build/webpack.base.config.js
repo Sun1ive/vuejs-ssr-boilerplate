@@ -18,31 +18,32 @@ module.exports = merge(
     output: {
       path: path.resolve(__dirname, '../dist'),
       publicPath: '/dist/',
-      filename: assetsPath('js/[name].[chunkhash:16].js')
+      filename: assetsPath('js/[name].[chunkhash:16].js'),
     },
     module: {
-      noParse: /es6-promise\.js$/
+      noParse: /es6-promise\.js$/,
     },
     performance: {
       maxEntrypointSize: 300000,
-      hints: isProd ? 'warning' : false
+      hints: isProd ? 'warning' : false,
     },
     plugins: isProd
       ? [
           new VueLoaderPlugin(),
-          new MiniCssExtractPlugin({ filename: assetsPath('css/[name].[chunkhash].css') })
+          new MiniCssExtractPlugin({ filename: assetsPath('css/[name].[chunkhash].css') }),
         ]
       : [new VueLoaderPlugin(), new FriendlyErrorsPlugin()],
     optimization: {
       minimizer: isProd
         ? [
             new UglifyJsPlugin({
-              parallel: true
+              cache: true,
+              parallel: true,
             }),
-            new OptimizeCSSAssetsPlugin()
+            new OptimizeCSSAssetsPlugin(),
           ]
-        : []
-    }
+        : [],
+    },
   },
   rules.scssLoader(),
   rules.vueLoader(),
@@ -50,5 +51,6 @@ module.exports = merge(
   rules.eslintLoader(),
   rules.svgLoader(),
   rules.imagesLoader(),
-  rules.setupResolutions()
+  rules.setupResolutions(),
+  // rules.ScssCssLoader(),
 );

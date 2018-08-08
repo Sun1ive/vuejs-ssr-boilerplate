@@ -1,5 +1,8 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { assetsPath } = require('../utils');
+
+const isProd = process.env.NODE_ENV === 'production';
 
 function resolve(dir) {
   return path.resolve(__dirname, '..', dir);
@@ -136,12 +139,28 @@ exports.cssLoader = () => ({
   },
 });
 
+exports.ScssCssLoader = () => ({
+  module: {
+    rules: [
+      {
+        test: /\.(scss|css)$/,
+        use: [
+          !isProd ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: { minimize: isProd },
+          },
+        ],
+      },
+    ],
+  },
+});
+
 exports.setupResolutions = () => ({
   resolve: {
-    extensions: ['.js', '.vue', '.scss'],
+    extensions: ['.js', '.vue', '.scss', '.css'],
     alias: {
       vue$: 'vue/dist/vue.esm.js',
-      '~': resolve('../public'),
       '@': resolve('../src'),
     },
   },
