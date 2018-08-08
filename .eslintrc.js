@@ -2,8 +2,6 @@ const path = require('path');
 const isProd = process.env.NODE_ENV === 'production';
 const isWin = process.platform === 'win32' || 'win64';
 
-console.log(process.platform)
-
 module.exports = {
   root: true,
   parserOptions: {

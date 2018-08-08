@@ -112,27 +112,22 @@ async function render(req, res) {
   }
 }
 
+// eslint-disable-next-line
+function shouldRender(req, res) {
+  return isProd
+    ? render
+    : (req, res) => {
+      readyPromise.then(() => render(req, res));
+    };
+}
+
 if (isProd) {
-  app.get(
-    '/',
-    isProd
-      ? render
-      : (req, res) => {
-        readyPromise.then(() => render(req, res));
-      },
-  );
+  app.get('/', shouldRender());
   app.get('*', (req, res) => {
     res.render('index');
   });
 } else {
-  app.get(
-    '*',
-    isProd
-      ? render
-      : (req, res) => {
-        readyPromise.then(() => render(req, res));
-      },
-  );
+  app.get('*', shouldRender());
 }
 
 app.listen(app.get('port'), () => console.log(`Server started at localhost:${app.get('port')}`));
