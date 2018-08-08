@@ -1,6 +1,6 @@
 const path = require('path');
 const isProd = process.env.NODE_ENV === 'production';
-const isWin = process.platform === 'win32' || 'win64';
+const isWin = process.platform === 'win32';
 
 module.exports = {
   root: true,
