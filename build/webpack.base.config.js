@@ -35,6 +35,10 @@ module.exports = {
     maxEntrypointSize: 300000,
     hints: isProd ? 'warning' : false
   },
+  stats: {
+    entrypoints: false,
+    children: false
+  },
   plugins: isProd
     ? [
         new VueLoaderPlugin(),
