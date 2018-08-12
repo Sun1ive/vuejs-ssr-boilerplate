@@ -4,7 +4,7 @@ import cookieDough from 'cookie-dough';
 import { createApp } from './main';
 
 const renderClient = async () => {
-  const { app, router, store } = createApp({
+  const { app, router, store } = await createApp({
     // prime the store with server-initialized state.
     // the state is determined during SSR and inlined in the page markup.
     initialState: window.__INITIAL_STATE__,

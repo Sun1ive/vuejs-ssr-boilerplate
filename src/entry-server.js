@@ -11,9 +11,13 @@ const isDev = process.env.NODE_ENV !== 'production';
 // eslint-disable-next-line
 export default context => {
   // eslint-disable-next-line
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const s = isDev && Date.now();
-    const { app, router, store } = createApp();
+    const { app, router, store } = await createApp({
+      extras: {
+        cookies: context.cookies,
+      },
+    });
 
     const { url } = context;
     const { fullPath } = router.resolve(url).route;

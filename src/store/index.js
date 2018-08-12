@@ -8,13 +8,18 @@ import getInitialState from './getInitialState';
 Vue.use(Vuex);
 
 // eslint-disable-next-line
-export function createStore() {
+export function createStore({ initialState, externalActions }) {
   // get access to store
   const store = new Vuex.Store({
-    state: getInitialState(),
-    actions,
+    state: initialState || getInitialState(),
+    actions: { ...externalActions, ...actions },
     mutations,
     getters,
+    modules: {
+      routerModule: {
+        actions: null,
+      },
+    },
   });
   return store;
 }

@@ -12,14 +12,33 @@ Vue.component('no-ssr', NoSSR);
 // app instances on each call (which is called for each SSR request)
 
 // eslint-disable-next-line
-export function createApp() {
+export function createApp({ initialState, extras }) {
+  // create externalActions
+  const getExtras = () => extras;
+
   // create store and router instances
-  const store = createStore();
-  const router = createRouter();
+  const store = createStore({
+    initialState,
+    externalActions: { getExtras },
+  });
+  const router = createRouter({ store });
 
   // sync the router with the vuex store.
   // this registers `store.state.route`
   sync(store, router);
+
+  // create getRouter action to access router inside store
+  const getRouter = () => router;
+
+  store.hotUpdate({
+    modules: {
+      routerModule: {
+        actions: {
+          getRouter,
+        },
+      },
+    },
+  });
 
   // create the app instance.
   // here we inject the router, store and ssr context to all child components,
