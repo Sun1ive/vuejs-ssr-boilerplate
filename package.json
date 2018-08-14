@@ -12,7 +12,7 @@
     "test": "rimraf coverage && jest",
     "test:acceptance": "rimraf tests/e2e/screenshots && cypress run --browser chrome",
     "cypress:open": "cypress open",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "storybook": "start-storybook -p 9001 -c .storybook -s ./public"
   },
   "engines": {
     "node": ">=8.0",
