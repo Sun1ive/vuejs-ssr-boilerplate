@@ -4,7 +4,13 @@ const rules = require('../build/loaders');
 
 module.exports = webpackMerge({
   module: {
-    rules: [rules.svgLoader(), rules.imagesLoader(), rules.scssLoader(), rules.cssLoader()]
+    rules: [
+      rules.svgLoader(),
+      rules.imagesLoader(),
+      rules.scssLoader(),
+      rules.cssLoader(),
+      rules.storybookAddonStorysourceLoader()
+    ]
   },
   resolve: rules.setupResolutions(),
   plugins: [new VueLoaderPlugin()]

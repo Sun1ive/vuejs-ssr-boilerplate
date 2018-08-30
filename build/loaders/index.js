@@ -117,3 +117,18 @@ exports.setupResolutions = () => ({
     '@': resolve('../src'),
   },
 });
+
+exports.storybookAddonStorysourceLoader = () => ({
+  test: /\.story\.js$/,
+  loaders: [
+    {
+      loader: require.resolve('@storybook/addon-storysource/loader'),
+      options: {
+        prettierConfig: {
+          parser: 'babylon'
+        }
+      }
+    }
+  ],
+  enforce: 'pre'
+});
