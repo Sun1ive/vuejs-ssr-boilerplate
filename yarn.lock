@@ -5824,7 +5824,7 @@ hide-powered-by@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/hide-powered-by/-/hide-powered-by-1.0.0.tgz#4a85ad65881f62857fc70af7174a1184dccce32b"
 
-highlight.js@~9.12.0:
+highlight.js@^9.12.0, highlight.js@~9.12.0:
   version "9.12.0"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.12.0.tgz#e6d9dbe57cbefe60751f02af336195870c90c01e"
 
@@ -7635,7 +7635,7 @@ markdown-loader@^2.0.2:
     loader-utils "^1.1.0"
     marked "^0.3.9"
 
-marked@^0.3.9:
+marked@^0.3.19, marked@^0.3.9:
   version "0.3.19"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
 
@@ -10720,6 +10720,15 @@ stealthy-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
 
+storybook-addon-vue-info@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/storybook-addon-vue-info/-/storybook-addon-vue-info-0.6.1.tgz#2c191fc5fa0e48da3d1fefeb255924d3f751d9dc"
+  dependencies:
+    dedent "^0.7.0"
+    highlight.js "^9.12.0"
+    marked "^0.3.19"
+    vue-template-compiler "^2.5.16"
+
 storybook@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/storybook/-/storybook-1.0.0.tgz#c53f572c85d0345e30a93fa68e09c430fa43b4f3"
@@ -11617,7 +11626,7 @@ vue-svg-loader@^0.8.0:
     vue-template-compiler "^2.5.17"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-template-compiler@^2.5.17:
+vue-template-compiler@^2.5.16, vue-template-compiler@^2.5.17:
   version "2.5.17"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.17.tgz#52a4a078c327deb937482a509ae85c06f346c3cb"
   dependencies:

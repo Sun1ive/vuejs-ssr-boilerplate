@@ -33,6 +33,7 @@
     "normalize.css": "^8.0.0",
     "serve-favicon": "^2.5.0",
     "storybook": "^1.0.0",
+    "storybook-addon-vue-info": "^0.6.1",
     "vue": "^2.5.17",
     "vue-no-ssr": "^0.2.2",
     "vue-router": "^3.0.1",
