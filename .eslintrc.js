@@ -41,6 +41,12 @@ module.exports = {
     'no-param-reassign': 0,
     // allow debugger during development
     'no-debugger': isProd ? 2 : 0,
-    'no-console': isProd ? 2 : 0
+    'no-console': isProd ? 2 : 0,
+    "import/no-extraneous-dependencies": [
+      'error',
+      {
+        devDependencies: ['**/*.story.js']
+      }
+    ]
   }
 };

@@ -1,5 +1,6 @@
 import { configure, addDecorator } from '@storybook/vue';
 import { setOptions } from '@storybook/addon-options';
+import vueInfoAddon, { setDefaults } from 'storybook-addon-vue-info';
 
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -44,6 +45,12 @@ addDecorator((storyFn, context) => {
     template: `<Main>${options.template}</Main>`
   };
 });
+
+// storybook-addon-vue-info
+setDefaults({
+  header: false,
+});
+addDecorator(vueInfoAddon);
 
 addDecorator(storyRouterDecorator());
 
