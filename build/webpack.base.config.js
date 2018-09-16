@@ -22,10 +22,8 @@ module.exports = {
   module: {
     noParse: /es6-promise\.js$/,
     rules: [
-      // rules.scssLoader(),
       rules.vueLoader(),
       rules.babelLoader(),
-      rules.eslintLoader(),
       rules.svgLoader(),
       rules.imagesLoader()
     ]
