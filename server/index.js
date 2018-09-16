@@ -1,4 +1,5 @@
 require('dotenv').config(); // eslint-disable-line
+
 const fs = require('fs');
 const path = require('path');
 const LRU = require('lru-cache');
@@ -9,6 +10,8 @@ const favicon = require('serve-favicon');
 const compression = require('compression');
 const CookieDough = require('cookie-dough');
 const { createBundleRenderer } = require('vue-server-renderer');
+
+const processEnv = require('../src/config/process_env');
 
 const isProd = process.env.NODE_ENV === 'production';
 const resolve = file => path.resolve(__dirname, file);
@@ -103,6 +106,7 @@ async function render(req, res) {
     title: 'Vuejs SSR template',
     meta: '<meta description="Vuejs SSR project">',
     cookies: new CookieDough(req),
+    config: escape(JSON.stringify(processEnv)),
   };
   try {
     const html = await renderer.renderToString(context);

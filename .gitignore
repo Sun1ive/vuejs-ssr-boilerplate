@@ -9,7 +9,6 @@ tests/e2e/screenshots
 
 # local env files
 .env
-.env*
 
 # Editor directories and files
 .idea
