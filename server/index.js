@@ -121,13 +121,7 @@ function shouldRender(req, res) {
     };
 }
 
-if (isProd) {
-  app.get('/', shouldRender());
-  app.get('*', (req, res) => {
-    res.render('index');
-  });
-} else {
-  app.get('*', shouldRender());
-}
+
+app.get('*', shouldRender());
 
 app.listen(app.get('port'), () => console.log(`Server started at localhost:${app.get('port')}`));
