@@ -65,10 +65,6 @@ const serve = (path, cache) => express.static(resolve(path), {
   maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0,
 });
 
-app.engine('html', require('ejs').renderFile);
-
-app.set('view engine', 'html');
-app.set('views', path.resolve(__dirname, '../dist'));
 app.set('port', process.env.PORT || 8080);
 
 app.use(helmet());

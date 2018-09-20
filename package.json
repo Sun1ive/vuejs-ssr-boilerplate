@@ -29,7 +29,6 @@
     "compression": "^1.7.3",
     "cookie-dough": "^0.1.0",
     "cookie-parser": "^1.4.3",
-    "ejs": "^2.6.1",
     "express": "^4.16.3",
     "helmet": "^3.13.0",
     "lru-cache": "^4.1.3",
