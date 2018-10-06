@@ -1,5 +1,4 @@
 const path = require('path');
-const merge = require('webpack-merge');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
