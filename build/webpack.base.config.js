@@ -1,5 +1,4 @@
 const path = require('path');
-const merge = require('webpack-merge');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -17,41 +16,42 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/',
-    filename: assetsPath('js/[name].[chunkhash:16].js')
+    filename: assetsPath('js/[name].[chunkhash:16].js'),
   },
   module: {
-    noParse: /es6-promise\.js$/,
     rules: [
       rules.vueLoader(),
       rules.babelLoader(),
       rules.svgLoader(),
-      rules.imagesLoader()
-    ]
+      rules.imagesLoader(),
+    ],
   },
   resolve: rules.setupResolutions(),
   performance: {
     maxEntrypointSize: 300000,
-    hints: isProd ? 'warning' : false
+    hints: isProd ? 'warning' : false,
   },
   stats: {
     entrypoints: false,
-    children: false
+    children: false,
   },
   plugins: isProd
     ? [
-        new VueLoaderPlugin(),
-        new MiniCssExtractPlugin({ filename: assetsPath('css/[name].[chunkhash].css') })
-      ]
+      new VueLoaderPlugin(),
+      new MiniCssExtractPlugin({
+        filename: assetsPath('css/[name].[chunkhash].css'),
+      }),
+    ]
     : [new VueLoaderPlugin(), new FriendlyErrorsPlugin()],
   optimization: {
     minimizer: isProd
       ? [
-          new UglifyJsPlugin({
-            cache: true,
-            parallel: true
-          }),
-          new OptimizeCSSAssetsPlugin()
-        ]
-      : []
-  }
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+        }),
+        new OptimizeCSSAssetsPlugin(),
+      ]
+      : [],
+  },
 };
