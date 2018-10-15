@@ -1,3 +1,1 @@
-export default () => ({
-  counter: 0,
-});
+export default () => ({});

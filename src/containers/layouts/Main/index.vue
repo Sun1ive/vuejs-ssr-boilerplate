@@ -1,4 +1,5 @@
 <template>
+  <!-- this is storybook entrypoint -->
   <div>
     <slot />
   </div>

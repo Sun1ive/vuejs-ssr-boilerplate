@@ -30,6 +30,7 @@ module.exports = {
     'airbnb-base'
   ],
   rules: {
+    'comma-dangle': 0,
     'prefer-promise-reject-errors': 0,
     'import/extensions': 0,
     'vue/max-attributes-per-line': 0,
@@ -42,7 +43,7 @@ module.exports = {
     // allow debugger during development
     'no-debugger': isProd ? 2 : 0,
     'no-console': isProd ? 2 : 0,
-    "import/no-extraneous-dependencies": [
+    'import/no-extraneous-dependencies': [
       'error',
       {
         devDependencies: ['**/*.story.js']

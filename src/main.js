@@ -1,12 +1,13 @@
 import '@babel/polyfill';
+import 'normalize.css';
 
 import Vue from 'vue';
 import { sync } from 'vuex-router-sync';
 import NoSSR from 'vue-no-ssr';
+
 import { createStore } from '@/store';
 import { createRouter } from '@/router';
-import ClientEntrypoint from '@/containers/entrypoints/ClientEntrypoint';
-import 'normalize.css';
+import App from '@/containers/layouts/App';
 
 Vue.component('no-ssr', NoSSR);
 
@@ -48,7 +49,7 @@ export function createApp({ initialState, extras }) {
   const app = new Vue({
     router,
     store,
-    render: h => h(ClientEntrypoint),
+    render: h => h(App),
   });
 
   // expose the app, the router and the store.
