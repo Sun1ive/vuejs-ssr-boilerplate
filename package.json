@@ -96,6 +96,8 @@
     "sass-loader": "^7.1.0",
     "storybook": "^1.0.0",
     "storybook-addon-vue-info": "^0.6.2",
+    "stylelint": "^9.6.0",
+    "stylelint-config-standard": "^18.2.0",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "url-loader": "^1.1.2",
     "vue-jest": "^2.6.0",
@@ -118,5 +120,11 @@
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
-  "lint-staged": {}
+  "lint-staged": {
+    "*.{js,vue}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.@(scss|css)": "stylelint"
+  }
 }
