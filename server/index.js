@@ -19,22 +19,28 @@ const templatePath = resolve('./index.html');
 
 const app = express();
 
+// eslint-disable-next-line
 function createRenderer(bundle, options) {
-  // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-  return createBundleRenderer(
-    bundle,
-    Object.assign(options, {
-      // for component caching
-      cache: new LRU({
-        max: 1000,
-        maxAge: 1000 * 60 * 15
-      }),
-      // this is only needed when vue-server-renderer is npm-linked
-      basedir: resolve('../dist'),
-      // recommended for performance
-      runInNewContext: false
-    })
-  );
+  try {
+    // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
+    const renderer = createBundleRenderer(
+      bundle,
+      Object.assign(options, {
+        // for component caching
+        cache: new LRU({
+          max: 1000,
+          maxAge: 1000 * 60 * 15
+        }),
+        // this is only needed when vue-server-renderer is npm-linked
+        basedir: resolve('../dist'),
+        // recommended for performance
+        runInNewContext: false
+      })
+    );
+    return renderer;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 let renderer;
@@ -56,13 +62,9 @@ if (isProd) {
   // In development: setup the dev server with watch and hot-reload,
   // and create a new renderer on bundle / index template update.
   // eslint-disable-next-line
-  readyPromise = require('../build/setup-dev-server')(
-    app,
-    templatePath,
-    (bundle, options) => {
-      renderer = createRenderer(bundle, options);
-    }
-  );
+  readyPromise = require('../build/setup-dev-server')(app, templatePath, (bundle, options) => {
+    renderer = createRenderer(bundle, options);
+  });
 }
 
 const serve = (path, cache) => express.static(resolve(path), {
