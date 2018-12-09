@@ -13,9 +13,9 @@ exports.vueLoader = () => ({
   loader: 'vue-loader',
   options: {
     compilerOptions: {
-      preserveWhitespace: false,
-    },
-  },
+      preserveWhitespace: false
+    }
+  }
 });
 
 exports.fontsLoader = () => ({
@@ -23,8 +23,8 @@ exports.fontsLoader = () => ({
   loader: 'url-loader',
   options: {
     limit: 10000,
-    name: assetsPath('fonts/[name].[hash:7].[ext]'),
-  },
+    name: assetsPath('fonts/[name].[hash:7].[ext]')
+  }
 });
 
 exports.mediaLoader = () => ({
@@ -32,8 +32,8 @@ exports.mediaLoader = () => ({
   loader: 'url-loader',
   options: {
     limit: 10000,
-    name: assetsPath('media/[name].[hash:7].[ext]'),
-  },
+    name: assetsPath('media/[name].[hash:7].[ext]')
+  }
 });
 
 exports.imagesLoader = () => ({
@@ -41,8 +41,8 @@ exports.imagesLoader = () => ({
   loader: 'url-loader',
   options: {
     limit: 10000,
-    name: assetsPath('img/[name].[hash:7].[ext]'),
-  },
+    name: assetsPath('img/[name].[hash:7].[ext]')
+  }
 });
 
 exports.svgLoader = () => ({
@@ -55,19 +55,19 @@ exports.svgLoader = () => ({
         { removeViewBox: false },
         {
           removeAttrs: {
-            attrs: '*:fill:((?!^none$).)*',
-          },
-        },
+            attrs: '*:fill:((?!^none$).)*'
+          }
+        }
       ],
-      name: assetsPath('svg/[name].[ext]'),
-    },
-  },
+      name: assetsPath('svg/[name].[ext]')
+    }
+  }
 });
 
 exports.babelLoader = () => ({
   test: /\.js$/,
   loader: 'babel-loader',
-  exclude: /node_modules/,
+  exclude: /node_modules/
 });
 
 exports.eslintLoader = () => ({
@@ -76,8 +76,8 @@ exports.eslintLoader = () => ({
   enforce: 'pre',
   include: [resolve('../src'), resolve('../test')],
   options: {
-    formatter: require('eslint-friendly-formatter'),
-  },
+    formatter: require('eslint-friendly-formatter')
+  }
 });
 
 exports.scssLoader = () => ({
@@ -85,12 +85,11 @@ exports.scssLoader = () => ({
   use: [
     !isProd ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
     {
-      loader: 'css-loader',
-      options: { minimize: isProd },
+      loader: 'css-loader'
     },
     'postcss-loader',
-    'sass-loader',
-  ],
+    'sass-loader'
+  ]
 });
 
 exports.cssLoader = () => ({
@@ -98,24 +97,23 @@ exports.cssLoader = () => ({
   use: [
     !isProd ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
     {
-      loader: 'css-loader',
-      options: { minimize: isProd },
+      loader: 'css-loader'
     },
-    'postcss-loader',
-  ],
+    'postcss-loader'
+  ]
 });
 
 exports.serverSideCssLoaders = () => ({
   test: /\.(css|scss)$/,
-  use: ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+  use: ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
 });
 
 exports.setupResolutions = () => ({
   extensions: ['.js', '.vue', '.scss', '.css'],
   alias: {
     vue$: 'vue/dist/vue.esm.js',
-    '@': resolve('../src'),
-  },
+    '@': resolve('../src')
+  }
 });
 
 exports.storybookAddonStorysourceLoader = () => ({

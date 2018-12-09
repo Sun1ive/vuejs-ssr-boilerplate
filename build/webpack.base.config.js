@@ -16,31 +16,31 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/',
-    filename: assetsPath('js/[name].[chunkhash:16].js'),
+    filename: assetsPath('js/[name].[chunkhash:16].js')
   },
   module: {
     rules: [
       rules.vueLoader(),
       rules.babelLoader(),
       rules.svgLoader(),
-      rules.imagesLoader(),
-    ],
+      rules.imagesLoader()
+    ]
   },
   resolve: rules.setupResolutions(),
   performance: {
     maxEntrypointSize: 300000,
-    hints: isProd ? 'warning' : false,
+    hints: isProd ? 'warning' : false
   },
   stats: {
     entrypoints: false,
-    children: false,
+    children: false
   },
   plugins: isProd
     ? [
       new VueLoaderPlugin(),
       new MiniCssExtractPlugin({
-        filename: assetsPath('css/[name].[chunkhash].css'),
-      }),
+        filename: assetsPath('css/[name].[chunkhash].css')
+      })
     ]
     : [new VueLoaderPlugin(), new FriendlyErrorsPlugin()],
   optimization: {
@@ -48,10 +48,10 @@ module.exports = {
       ? [
         new UglifyJsPlugin({
           cache: true,
-          parallel: true,
+          parallel: true
         }),
-        new OptimizeCSSAssetsPlugin(),
+        new OptimizeCSSAssetsPlugin()
       ]
-      : [],
-  },
+      : []
+  }
 };
