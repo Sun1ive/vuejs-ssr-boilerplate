@@ -9,14 +9,13 @@ const isDev = process.env.NODE_ENV !== 'production';
 // return a Promise that resolves to the app instance.
 
 // eslint-disable-next-line
-export default context => {
-  // eslint-disable-next-line
-  return new Promise(async (resolve, reject) => {
+export default context => new Promise(async (resolve, reject) => {
+  try {
     const s = isDev && Date.now();
     const { app, router, store } = await createApp({
       extras: {
-        cookies: context.cookies,
-      },
+        cookies: context.cookies
+      }
     });
 
     const { url } = context;
@@ -31,12 +30,12 @@ export default context => {
 
     // wait until router has resolved possible async hooks
     // eslint-disable-next-line
-    router.onReady(() => {
+      router.onReady(() => {
       const matchedComponents = router.getMatchedComponents();
       // no matched routes
       if (!matchedComponents.length) {
         // will crash the server / should decide if needed to redirect
-        return reject({ code: 404 });
+        router.push({ name: 'not-found' });
       }
       // Call fetchData hooks on components matched by the route.
       // A preFetch hook dispatches a store action and returns a Promise,
@@ -45,14 +44,15 @@ export default context => {
       Promise.all(
         matchedComponents.map(
           ({ asyncData }) => asyncData
-            && asyncData({
-              store,
-              route: router.currentRoute,
-            }),
-        ),
+              && asyncData({
+                store,
+                router,
+                route: router.currentRoute
+              })
+        )
       )
         .then(() => {
-          isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`); // eslint-disable-line
+            isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`); // eslint-disable-line
           // After all preFetch hooks are resolved, our store is now
           // filled with the state needed to render the app.
           // Expose the state on the render context, and let the request handler
@@ -65,5 +65,7 @@ export default context => {
         })
         .catch(reject);
     }, reject);
-  });
-};
+  } catch (error) {
+    reject(error);
+  }
+});
