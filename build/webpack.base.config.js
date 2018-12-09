@@ -4,6 +4,8 @@ const { VueLoaderPlugin } = require('vue-loader');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { cpus } = require('os');
+
 const { assetsPath } = require('./utils');
 
 const rules = require('./loaders');
@@ -19,12 +21,8 @@ module.exports = {
     filename: assetsPath('js/[name].[chunkhash:16].js')
   },
   module: {
-    rules: [
-      rules.vueLoader(),
-      rules.babelLoader(),
-      rules.svgLoader(),
-      rules.imagesLoader()
-    ]
+    noParse: /es6-promise\.js$/,
+    rules: [rules.vueLoader(), rules.babelLoader(), rules.svgLoader(), rules.imagesLoader()]
   },
   resolve: rules.setupResolutions(),
   performance: {
@@ -48,7 +46,7 @@ module.exports = {
       ? [
         new UglifyJsPlugin({
           cache: true,
-          parallel: true
+          parallel: cpus().length
         }),
         new OptimizeCSSAssetsPlugin()
       ]

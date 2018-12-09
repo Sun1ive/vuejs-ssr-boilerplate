@@ -113,9 +113,11 @@
     "webpack-node-externals": "^1.7.2"
   },
   "browserslist": [
-    "> 1%",
-    "last 15 versions",
-    "not ie <= 8"
+    "ie >= 10",
+    "safari >= 9",
+    "ios >= 9",
+    "> 0.5%",
+    "last 2 versions"
   ],
   "husky": {
     "hooks": {
@@ -127,6 +129,9 @@
       "eslint --fix",
       "git add"
     ],
-    "*.{scss,css}": "stylelint"
+    "*.{scss,css}": [
+      "stylelint --fix",
+      "git add"
+    ]
   }
 }
