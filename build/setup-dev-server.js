@@ -10,7 +10,7 @@ const readFile = (fs, file) => {
   try {
     return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8');
   } catch (e) {
-    console.warn('Error during read the file, ' + e);
+    console.warn(`Error during read the file, ${e}`);
   }
 };
 
@@ -28,7 +28,7 @@ module.exports = function setupDevServer(app, templatePath, cb) {
       ready();
       cb(bundle, {
         template,
-        clientManifest,
+        clientManifest
       });
     }
   };
@@ -42,11 +42,14 @@ module.exports = function setupDevServer(app, templatePath, cb) {
   });
 
   // modify client config to work with hot middleware
-  clientConfig.entry.app = ['webpack-hot-middleware/client', clientConfig.entry.app];
+  clientConfig.entry.app = [
+    'webpack-hot-middleware/client',
+    clientConfig.entry.app
+  ];
   clientConfig.output.filename = '[name].js';
   clientConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   );
 
   // dev middleware
@@ -54,24 +57,25 @@ module.exports = function setupDevServer(app, templatePath, cb) {
   const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
     noInfo: false,
-    stats: {
-      colors: true,
-      chunks: false,
-      modules: false,
-    },
+    stats: false
   });
+
   app.use(devMiddleware);
   clientCompiler.plugin('done', stats => {
     stats = stats.toJson();
     stats.errors.forEach(err => console.error(err));
     stats.warnings.forEach(err => console.warn(err));
     if (stats.errors.length) return;
-    clientManifest = JSON.parse(readFile(devMiddleware.fileSystem, 'vue-ssr-client-manifest.json'));
+    clientManifest = JSON.parse(
+      readFile(devMiddleware.fileSystem, 'vue-ssr-client-manifest.json')
+    );
     update();
   });
 
   // hot middleware
-  app.use(require('webpack-hot-middleware')(clientCompiler, { heartbeat: 5000 }));
+  app.use(
+    require('webpack-hot-middleware')(clientCompiler, { heartbeat: 5000 })
+  );
 
   // watch and update server renderer
   const serverCompiler = webpack(serverConfig);
