@@ -9,5 +9,5 @@ if (typeof window !== 'undefined' && window.__CONFIG__) {
 }
 export default {
   ...BUILT_IN_VALUES,
-  ...RUNTIME_VALUES,
+  ...RUNTIME_VALUES
 };
