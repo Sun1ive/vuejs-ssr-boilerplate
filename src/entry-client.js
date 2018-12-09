@@ -4,16 +4,32 @@ import cookieDough from 'cookie-dough';
 import { createApp } from './main';
 
 const renderClient = async () => {
-  const { app, router, store } = await createApp({
+  const { app, router } = await createApp({
     // prime the store with server-initialized state.
     // the state is determined during SSR and inlined in the page markup.
     initialState: window.__INITIAL_STATE__,
     extras: {
-      cookies: cookieDough(),
-    },
+      cookies: cookieDough()
+    }
   });
 
   // a global mixin that calls `asyncData` when a route component's params change
+  Vue.mixin({
+    beforeMount() {
+      const { asyncData } = this.$options;
+      if (asyncData) {
+        // assign the fetch operation to a promise
+        // so that in components we can do `this.dataPromise.then(...)` to
+        // perform other tasks after data is ready
+        this.dataPromise = asyncData({
+          store: this.$store,
+          route: this.$route,
+          router: this.$router
+        });
+      }
+    }
+  });
+
   Vue.mixin({
     beforeRouteUpdate(to, from, next) {
       const { asyncData } = this.$options;
@@ -21,43 +37,18 @@ const renderClient = async () => {
         asyncData({
           store: this.$store,
           route: to,
+          router: this.$router
         })
           .then(next)
           .catch(next);
       } else {
         next();
       }
-    },
+    }
   });
   // wait until router has resolved all async before hooks
   // and async components...
   router.onReady(() => {
-    // Add router hook for handling asyncData.
-    // Doing it after initial route is resolved so that we don't double-fetch
-    // the data that we already have. Using router.beforeResolve() so that all
-    // async components are resolved.
-    // eslint-disable-next-line
-    router.beforeResolve((to, from, next) => {
-      const matched = router.getMatchedComponents(to);
-      const prevMatched = router.getMatchedComponents(from);
-
-      let diffed = false;
-
-      // matching all components and check difference between routes
-      // eslint-disable-next-line
-      const activated = matched.filter((component, index) => diffed || (diffed = prevMatched[index] !== component));
-      const asyncDataHooks = activated.map(component => component.asyncData).filter(_ => _);
-      if (!asyncDataHooks.length) {
-        return next();
-      }
-
-      Promise.all(asyncDataHooks.map(hook => hook({ store, route: to })))
-        .then(() => {
-          next();
-        })
-        .catch(next);
-    });
-
     // actually mount to DOM
     app.$mount('#app');
   });
