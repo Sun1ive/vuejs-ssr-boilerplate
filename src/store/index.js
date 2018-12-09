@@ -15,11 +15,6 @@ export function createStore({ initialState, externalActions }) {
     actions: { ...externalActions, ...actions },
     mutations,
     getters,
-    modules: {
-      routerModule: {
-        actions: null,
-      },
-    },
   });
   return store;
 }

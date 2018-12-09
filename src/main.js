@@ -21,22 +21,9 @@ export function createApp({ initialState, extras }) {
   // create store and router instances
   const store = createStore({
     initialState,
-    externalActions: { getExtras },
+    externalActions: { getExtras }
   });
   const router = createRouter({ store });
-
-  // create getRouter action to access router inside store
-  const getRouter = () => router;
-
-  store.hotUpdate({
-    modules: {
-      routerModule: {
-        actions: {
-          getRouter,
-        },
-      },
-    },
-  });
 
   // create the app instance.
   // here we inject the router, store and ssr context to all child components,
@@ -44,7 +31,7 @@ export function createApp({ initialState, extras }) {
   const app = new Vue({
     router,
     store,
-    render: h => h(App),
+    render: h => h(App)
   });
 
   // expose the app, the router and the store.
