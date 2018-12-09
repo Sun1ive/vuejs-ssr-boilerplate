@@ -2,7 +2,6 @@ import '@babel/polyfill';
 import 'normalize.css';
 
 import Vue from 'vue';
-import { sync } from 'vuex-router-sync';
 import NoSSR from 'vue-no-ssr';
 
 import { createStore } from '@/store';
@@ -25,10 +24,6 @@ export function createApp({ initialState, extras }) {
     externalActions: { getExtras },
   });
   const router = createRouter({ store });
-
-  // sync the router with the vuex store.
-  // this registers `store.state.route`
-  sync(store, router);
 
   // create getRouter action to access router inside store
   const getRouter = () => router;

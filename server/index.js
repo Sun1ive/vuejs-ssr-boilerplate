@@ -25,15 +25,15 @@ function createRenderer(bundle, options) {
     bundle,
     Object.assign(options, {
       // for component caching
-      cache: LRU({
+      cache: new LRU({
         max: 1000,
-        maxAge: 1000 * 60 * 15,
+        maxAge: 1000 * 60 * 15
       }),
       // this is only needed when vue-server-renderer is npm-linked
       basedir: resolve('../dist'),
       // recommended for performance
-      runInNewContext: false,
-    }),
+      runInNewContext: false
+    })
   );
 }
 
@@ -50,19 +50,23 @@ if (isProd) {
   const clientManifest = require('../dist/vue-ssr-client-manifest.json'); //eslint-disable-line
   renderer = createRenderer(bundle, {
     template,
-    clientManifest,
+    clientManifest
   });
 } else {
   // In development: setup the dev server with watch and hot-reload,
   // and create a new renderer on bundle / index template update.
   // eslint-disable-next-line
-  readyPromise = require('../build/setup-dev-server')(app, templatePath, (bundle, options) => {
-    renderer = createRenderer(bundle, options);
-  });
+  readyPromise = require('../build/setup-dev-server')(
+    app,
+    templatePath,
+    (bundle, options) => {
+      renderer = createRenderer(bundle, options);
+    }
+  );
 }
 
 const serve = (path, cache) => express.static(resolve(path), {
-  maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0,
+  maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
 });
 
 app.set('port', process.env.PORT || 8080);
@@ -102,7 +106,7 @@ async function render(req, res) {
     title: 'Vuejs SSR template',
     meta: '<meta description="Vuejs SSR project">',
     cookies: new CookieDough(req),
-    config: escape(JSON.stringify(processEnv)),
+    config: escape(JSON.stringify(processEnv))
   };
   try {
     const html = await renderer.renderToString(context);
@@ -120,7 +124,6 @@ function shouldRender(req, res) {
       readyPromise.then(() => render(req, res));
     };
 }
-
 
 app.get('*', shouldRender());
 
